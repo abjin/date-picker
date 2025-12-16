@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Datepicker">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Onboarding1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InterestSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BudgetSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LocationSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CourseGenerateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CourseResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyPageActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Primary Colors - Sophisticated Rose/Coral tones -->
+    <color name="primary">#FFFF6B9D</color>
+    <color name="primary_variant">#FFFF8FB3</color>
+    <color name="primary_dark">#FFE55486</color>
+
+    <!-- Secondary Colors - Warm Purple -->
+    <color name="secondary">#FF7C4DFF</color>
+    <color name="secondary_variant">#FF9D7BFF</color>
+    <color name="secondary_dark">#FF5E35E0</color>
+
+    <!-- Background & Surface -->
+    <color name="background">#FFFAFAFA</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="surface_variant">#FFF5F5F5</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FF1A1A1A</color>
+    <color name="text_secondary">#FF757575</color>
+    <color name="text_tertiary">#FF9E9E9E</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_coral">#FFFFAB91</color>
+    <color name="accent_mint">#FF80CBC4</color>
+    <color name="accent_lavender">#FFB39DDB</color>
+    <color name="accent_peach">#FFFFCCBC</color>
+
+    <!-- Status Colors -->
+    <color name="success">#FF66BB6A</color>
+    <color name="warning">#FFFFB74D</color>
+    <color name="error">#FFEF5350</color>
+
+    <!-- Neutral Grays -->
+    <color name="gray_50">#FFFAFAFA</color>
+    <color name="gray_100">#FFF5F5F5</color>
+    <color name="gray_200">#FFEEEEEE</color>
+    <color name="gray_300">#FFE0E0E0</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_500">#FF9E9E9E</color>
+    <color name="gray_600">#FF757575</color>
+    <color name="gray_700">#FF616161</color>
+    <color name="gray_800">#FF424242</color>
+    <color name="gray_900">#FF212121</color>
+
+    <!-- Legacy colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
