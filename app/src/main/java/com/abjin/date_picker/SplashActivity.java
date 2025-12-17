@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.abjin.date_picker.auth.TokenManager;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_DELAY = 2000;
@@ -49,7 +51,17 @@ public class SplashActivity extends AppCompatActivity {
 
         // Navigate after delay
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, Onboarding1Activity.class);
+            TokenManager tokenManager = TokenManager.getInstance(SplashActivity.this);
+            Intent intent;
+
+            if (tokenManager.isLoggedIn()) {
+                // 이미 로그인되어 있으면 HomeActivity로 이동
+                intent = new Intent(SplashActivity.this, HomeActivity.class);
+            } else {
+                // 첫 방문이면 Onboarding으로 이동
+                intent = new Intent(SplashActivity.this, Onboarding1Activity.class);
+            }
+
             startActivity(intent);
             finish();
         }, SPLASH_DELAY);
