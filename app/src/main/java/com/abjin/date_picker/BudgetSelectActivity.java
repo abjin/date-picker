@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.slider.Slider;
@@ -30,8 +31,16 @@ public class BudgetSelectActivity extends AppCompatActivity {
         tvBudgetAmount = findViewById(R.id.tvBudgetAmount);
         MaterialButton btnNext = findViewById(R.id.btnNext);
 
-        sliderBudget.setValue(5f);
-        updateBudgetText(5f);
+        // 기존 budget 로드
+        UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(this);
+        float existingBudget = userPrefManager.getBudget();
+        if (existingBudget > 0) {
+            currentBudget = existingBudget;
+            sliderBudget.setValue(existingBudget);
+        } else {
+            sliderBudget.setValue(5f);
+        }
+        updateBudgetText(currentBudget);
 
         cardPreset1.setOnClickListener(v -> selectPreset(1, 4f));
         cardPreset2.setOnClickListener(v -> selectPreset(2, 8f));
@@ -47,6 +56,9 @@ public class BudgetSelectActivity extends AppCompatActivity {
         });
 
         btnNext.setOnClickListener(v -> {
+            // 선택한 budget 저장
+            userPrefManager.setBudget(currentBudget);
+
             Intent intent = new Intent(BudgetSelectActivity.this, LocationSelectActivity.class);
             startActivity(intent);
         });

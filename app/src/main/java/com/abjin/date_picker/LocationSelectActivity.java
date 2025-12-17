@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
 
 public class LocationSelectActivity extends AppCompatActivity {
@@ -25,6 +26,14 @@ public class LocationSelectActivity extends AppCompatActivity {
         gridLocations = findViewById(R.id.gridLocations);
         MaterialButton btnComplete = findViewById(R.id.btnComplete);
 
+        // 기존 region 로드
+        UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(this);
+        String existingRegion = userPrefManager.getRegion();
+        if (existingRegion != null && !existingRegion.isEmpty()) {
+            selectedLocation = existingRegion;
+        }
+        tvSelectedLocation.setText(selectedLocation);
+
         String[] locations = {"홍대", "강남", "신촌", "명동", "이태원",
                               "건대", "잠실", "압구정", "성수", "여의도"};
 
@@ -33,6 +42,9 @@ public class LocationSelectActivity extends AppCompatActivity {
         }
 
         btnComplete.setOnClickListener(v -> {
+            // 선택한 region 저장
+            userPrefManager.setRegion(selectedLocation);
+
             Intent intent = new Intent(LocationSelectActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

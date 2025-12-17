@@ -11,11 +11,15 @@ import com.abjin.date_picker.api.ApiClient;
 import com.abjin.date_picker.api.AuthApiService;
 import com.abjin.date_picker.api.models.GoogleTokenRequest;
 import com.abjin.date_picker.api.models.GoogleTokenResponse;
+import com.abjin.date_picker.api.models.UserInfo;
 import com.abjin.date_picker.auth.GoogleAuthManager;
 import com.abjin.date_picker.auth.TokenManager;
+import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.HashSet;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                 String accountId = googleAuthManager.getAccountId(account);
                 String idToken = googleAuthManager.getIdToken(account);
                 sendTokenToBackend(accountId, idToken);
-                navigateToInterestSelect();
             } catch (ApiException e) {
                 hideProgressDialog();
                 Toast.makeText(this, "Google 로그인 실패: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -88,13 +91,29 @@ public class LoginActivity extends AppCompatActivity {
 
                     // 사용자 정보 저장
                     if (tokenResponse.getUser() != null) {
+                        UserInfo user = tokenResponse.getUser();
                         tokenManager.saveUserInfo(
-                                tokenResponse.getUser().getId(),
-                                tokenResponse.getUser().getEmail(),
-                                tokenResponse.getUser().getName(),
-                                tokenResponse.getUser().getProfileImageUrl()
+                                user.getId(),
+                                user.getEmail(),
+                                user.getName(),
+                                user.getProfileImageUrl()
                         );
+
+                        // 사용자 선호도 저장
+                        UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(LoginActivity.this);
+
+                        if (user.getRegion() != null) {
+                            userPrefManager.setRegion(user.getRegion());
+                        }
+                        if (user.getInterests() != null && !user.getInterests().isEmpty()) {
+                            userPrefManager.setInterests(new HashSet<>(user.getInterests()));
+                        }
+                        if (user.getBudget() != null) {
+                            userPrefManager.setBudget(user.getBudget().floatValue());
+                        }
                     }
+
+                    navigateToInterestSelect();
                 } else {
                     Toast.makeText(LoginActivity.this, "서버 인증 실패", Toast.LENGTH_SHORT).show();
                 }

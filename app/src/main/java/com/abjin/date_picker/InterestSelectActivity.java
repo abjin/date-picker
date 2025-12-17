@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -34,6 +35,13 @@ public class InterestSelectActivity extends AppCompatActivity {
         RecyclerView rvInterests = findViewById(R.id.rvInterests);
         btnNext = findViewById(R.id.btnNext);
 
+        // 기존 interests 로드
+        UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(this);
+        Set<String> existingInterests = userPrefManager.getInterests();
+        if (!existingInterests.isEmpty()) {
+            selectedInterests = new HashSet<>(existingInterests);
+        }
+
         List<Interest> interests = new ArrayList<>();
         interests.add(new Interest("🍽", "맛집 / 카페"));
         interests.add(new Interest("🎬", "영화 / 공연"));
@@ -44,11 +52,15 @@ public class InterestSelectActivity extends AppCompatActivity {
         interests.add(new Interest("🎲", "랜덤 코스"));
 
         adapter = new InterestAdapter(interests, this::onInterestToggled);
+        adapter.selectedItems.addAll(selectedInterests);
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
         rvInterests.setAdapter(adapter);
 
-        btnNext.setEnabled(false);
+        btnNext.setEnabled(!selectedInterests.isEmpty());
         btnNext.setOnClickListener(v -> {
+            // 선택한 interests 저장
+            userPrefManager.setInterests(selectedInterests);
+
             Intent intent = new Intent(InterestSelectActivity.this, BudgetSelectActivity.class);
             startActivity(intent);
         });
