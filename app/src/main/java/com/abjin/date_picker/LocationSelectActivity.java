@@ -8,8 +8,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.abjin.date_picker.api.models.UserPreferenceResponse;
 import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
+
+import android.util.Log;
 
 public class LocationSelectActivity extends AppCompatActivity {
 
@@ -44,6 +47,19 @@ public class LocationSelectActivity extends AppCompatActivity {
         btnComplete.setOnClickListener(v -> {
             // 선택한 region 저장
             userPrefManager.setRegion(selectedLocation);
+
+            // 서버에 사용자 정보 업데이트
+            userPrefManager.updateUserToServer(new UserPreferenceManager.OnUpdateListener() {
+                @Override
+                public void onSuccess(UserPreferenceResponse response) {
+                    Log.d("LocationSelectActivity", "User preference updated successfully");
+                }
+
+                @Override
+                public void onError(String errorMessage) {
+                    Log.e("LocationSelectActivity", "Failed to update user preference: " + errorMessage);
+                }
+            });
 
             Intent intent = new Intent(LocationSelectActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
