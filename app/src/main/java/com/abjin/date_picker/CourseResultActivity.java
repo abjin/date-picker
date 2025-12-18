@@ -1,5 +1,7 @@
 package com.abjin.date_picker;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +15,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.abjin.date_picker.api.models.DateCourseResponse;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CourseResultActivity extends AppCompatActivity {
@@ -32,19 +34,22 @@ public class CourseResultActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        TextView tvCourseTitle = findViewById(R.id.tvCourseTitle);
+        TextView tvCourseDescription = findViewById(R.id.tvCourseDescription);
         RecyclerView rvCourseSpots = findViewById(R.id.rvCourseSpots);
         MaterialButton btnSave = findViewById(R.id.btnSave);
         MaterialButton btnShare = findViewById(R.id.btnShare);
 
-        // Sample data
-        List<CourseSpot> spots = new ArrayList<>();
-        spots.add(new CourseSpot("감성 카페", "카페", "분위기 좋은 로스터리 카페", "1시간"));
-        spots.add(new CourseSpot("이탈리안 레스토랑", "식사", "파스타와 와인이 맛있는 곳", "1.5시간"));
-        spots.add(new CourseSpot("한강 산책로", "산책", "야경이 아름다운 한강 공원", "30분"));
+        DateCourseResponse courseData = (DateCourseResponse) getIntent().getSerializableExtra("course_data");
 
-        CourseSpotAdapter adapter = new CourseSpotAdapter(spots);
-        rvCourseSpots.setLayoutManager(new LinearLayoutManager(this));
-        rvCourseSpots.setAdapter(adapter);
+        if (courseData != null) {
+            tvCourseTitle.setText(courseData.getTitle());
+            tvCourseDescription.setText(courseData.getCourseDescription());
+
+            CourseSpotAdapter adapter = new CourseSpotAdapter(courseData.getPlaces());
+            rvCourseSpots.setLayoutManager(new LinearLayoutManager(this));
+            rvCourseSpots.setAdapter(adapter);
+        }
 
         btnSave.setOnClickListener(v -> {
             Toast.makeText(this, "코스가 저장되었습니다", Toast.LENGTH_SHORT).show();
@@ -55,24 +60,10 @@ public class CourseResultActivity extends AppCompatActivity {
         });
     }
 
-    static class CourseSpot {
-        String name;
-        String category;
-        String description;
-        String duration;
-
-        CourseSpot(String name, String category, String description, String duration) {
-            this.name = name;
-            this.category = category;
-            this.description = description;
-            this.duration = duration;
-        }
-    }
-
     static class CourseSpotAdapter extends RecyclerView.Adapter<CourseSpotAdapter.ViewHolder> {
-        private List<CourseSpot> spots;
+        private List<DateCourseResponse.Place> spots;
 
-        CourseSpotAdapter(List<CourseSpot> spots) {
+        CourseSpotAdapter(List<DateCourseResponse.Place> spots) {
             this.spots = spots;
         }
 
@@ -86,17 +77,17 @@ public class CourseResultActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            CourseSpot spot = spots.get(position);
+            DateCourseResponse.Place spot = spots.get(position);
             holder.bind(spot, position + 1);
         }
 
         @Override
         public int getItemCount() {
-            return spots.size();
+            return spots != null ? spots.size() : 0;
         }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvSpotNumber, tvSpotName, tvSpotCategory, tvSpotDescription, tvSpotDuration;
+            TextView tvSpotNumber, tvSpotName, tvSpotCategory, tvSpotDescription;
 
             ViewHolder(View itemView) {
                 super(itemView);
@@ -104,15 +95,23 @@ public class CourseResultActivity extends AppCompatActivity {
                 tvSpotName = itemView.findViewById(R.id.tvSpotName);
                 tvSpotCategory = itemView.findViewById(R.id.tvSpotCategory);
                 tvSpotDescription = itemView.findViewById(R.id.tvSpotDescription);
-                tvSpotDuration = itemView.findViewById(R.id.tvSpotDuration);
             }
 
-            void bind(CourseSpot spot, int number) {
+            void bind(DateCourseResponse.Place spot, int number) {
                 tvSpotNumber.setText(String.valueOf(number));
-                tvSpotName.setText(spot.name);
-                tvSpotCategory.setText(spot.category);
-                tvSpotDescription.setText(spot.description);
-                tvSpotDuration.setText("예상 소요시간: " + spot.duration);
+                tvSpotName.setText(spot.getPlace());
+                tvSpotDescription.setText(spot.getDescription());
+
+                String link = spot.getLink();
+                if (link != null && !link.isEmpty()) {
+                    tvSpotCategory.setText("링크 보기");
+                    tvSpotCategory.setOnClickListener(v -> {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                        v.getContext().startActivity(intent);
+                    });
+                } else {
+                    tvSpotCategory.setVisibility(View.GONE);
+                }
             }
         }
     }
