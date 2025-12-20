@@ -23,7 +23,6 @@ public class HomeActivity extends AppCompatActivity {
 
         MaterialCardView cvRecommendedCourse = findViewById(R.id.cvRecommendedCourse);
         MaterialButton btnGenerateCourse = findViewById(R.id.btnGenerateCourse);
-        MaterialButton btnRefresh = findViewById(R.id.btnRefresh);
         MaterialButton btnEditConditions = findViewById(R.id.btnEditConditions);
         MaterialButton btnSavedCourses = findViewById(R.id.btnSavedCourses);
 
@@ -35,10 +34,6 @@ public class HomeActivity extends AppCompatActivity {
         btnGenerateCourse.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CourseGenerateActivity.class);
             startActivity(intent);
-        });
-
-        btnRefresh.setOnClickListener(v -> {
-            // TODO: Implement refresh logic
         });
 
         btnEditConditions.setOnClickListener(v -> {
