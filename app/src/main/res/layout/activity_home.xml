@@ -48,78 +48,138 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="@color/primary_variant"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="2dp">
+                app:cardElevation="3dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <TextView
-                        android:id="@+id/tvRecommendedTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="강남 가성비 데이트 코스"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvRecommendedDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="맛집 + 카페 + 전시"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:maxLines="2"
-                        android:ellipsize="end" />
+                    android:background="@drawable/bg_recommended_course_gradient">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:padding="28dp">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="16dp">
 
                             <TextView
-                                android:id="@+id/tvRecommendedRegion"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="서울 강남"
-                                android:textColor="@color/white"
-                                android:textSize="13sp" />
+                                android:text="🔥 인기"
+                                android:background="@drawable/bg_badge_primary"
+                                android:paddingHorizontal="14dp"
+                                android:paddingVertical="8dp"
+                                android:textColor="@color/primary"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
 
                             <TextView
-                                android:id="@+id/tvRecommendedBudget"
+                                android:id="@+id/tvRecommendedPlaceCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="예산 5만원"
-                                android:textColor="@color/white"
-                                android:textSize="13sp" />
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="4dp"
+                                android:text="3곳"
+                                android:textColor="@color/text_tertiary"
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/tvRecommendedPlaceCount"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tvRecommendedTitle"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@android:drawable/dialog_holo_light_frame"
-                            android:paddingHorizontal="12dp"
-                            android:paddingVertical="6dp"
-                            android:text="3곳"
-                            android:textColor="@color/primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:text="강남 가성비 데이트 코스"
+                            android:textColor="@color/text_primary"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:lineSpacingExtra="4dp"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                        <TextView
+                            android:id="@+id/tvRecommendedDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="맛집 + 카페 + 전시"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp"
+                            android:lineSpacingExtra="4dp"
+                            android:maxLines="2"
+                            android:ellipsize="end" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical"
+                                android:layout_marginEnd="20dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="📍"
+                                    android:textSize="14sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <TextView
+                                    android:id="@+id/tvRecommendedRegion"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="서울 강남"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="💰"
+                                    android:textSize="14sp"
+                                    android:layout_marginEnd="4dp" />
+
+                                <TextView
+                                    android:id="@+id/tvRecommendedBudget"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="예산 5만원"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
