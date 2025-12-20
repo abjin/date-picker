@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.abjin.date_picker.api.ApiClient;
 import com.abjin.date_picker.api.DateCourseApiService;
+import com.abjin.date_picker.weather.WeatherManager;
 import com.abjin.date_picker.api.models.DateCourseResponse;
 import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
@@ -188,8 +189,19 @@ public class HomeActivity extends AppCompatActivity {
         String region = UserPreferenceManager.getInstance(this).getRegion();
         if (region != null && !region.isEmpty()) {
             toolbar.setTitle(region);
+            WeatherManager wm = new WeatherManager(this);
+            wm.fetchWeatherForRegion(region, data -> {
+                if (data != null) {
+                    toolbar.setSubtitle(data.subtitle);
+                    String combined = data.description + " " + Math.round(data.temperature) + "°C";
+                    UserPreferenceManager.getInstance(this).setWeather(combined);
+                } else {
+                    toolbar.setSubtitle(null);
+                }
+            });
         } else {
             toolbar.setTitle("지역을 선택해주세요");
+            toolbar.setSubtitle(null);
         }
     }
 

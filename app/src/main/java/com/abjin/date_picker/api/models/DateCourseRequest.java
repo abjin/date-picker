@@ -7,20 +7,30 @@ public class DateCourseRequest {
     private String region;
     private List<String> interests;
     private double budget;
+    private String weather; // optional
 
     public DateCourseRequest(String region, List<String> interests, double budget) {
-        this(region, interests, budget, null);
+        this(region, interests, budget, null, null);
     }
 
     public DateCourseRequest(String region, List<String> interests, double budget, String additional) {
+        this(region, interests, budget, additional, null);
+    }
+
+    public DateCourseRequest(String region, List<String> interests, double budget, String additional, String weather) {
         this.region = region;
         this.budget = budget;
-        // copy to avoid mutating caller's list
         this.interests = interests != null ? new ArrayList<>(interests) : new ArrayList<>();
         if (additional != null) {
             String extra = additional.trim();
             if (!extra.isEmpty()) {
                 this.interests.add(extra);
+            }
+        }
+        if (weather != null) {
+            String w = weather.trim();
+            if (!w.isEmpty()) {
+                this.weather = w;
             }
         }
     }
@@ -47,5 +57,13 @@ public class DateCourseRequest {
 
     public void setBudget(double budget) {
         this.budget = budget;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
     }
 }

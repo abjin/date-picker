@@ -23,6 +23,7 @@ public class UserPreferenceManager {
     private static final String KEY_INTERESTS = "interests";
     private static final String KEY_BUDGET = "budget";
     private static final String KEY_ADDITIONAL_REQUEST = "additional_request";
+    private static final String KEY_WEATHER = "weather";
 
     private static UserPreferenceManager instance;
     private SharedPreferences sharedPreferences;
@@ -56,6 +57,10 @@ public class UserPreferenceManager {
         sharedPreferences.edit().putString(KEY_ADDITIONAL_REQUEST, text).apply();
     }
 
+    public void setWeather(String weather) {
+        sharedPreferences.edit().putString(KEY_WEATHER, weather).apply();
+    }
+
     public String getRegion() {
         return sharedPreferences.getString(KEY_REGION, null);
     }
@@ -70,6 +75,10 @@ public class UserPreferenceManager {
 
     public String getAdditionalRequest() {
         return sharedPreferences.getString(KEY_ADDITIONAL_REQUEST, "");
+    }
+
+    public String getWeather() {
+        return sharedPreferences.getString(KEY_WEATHER, "");
     }
 
     public interface OnUpdateListener {

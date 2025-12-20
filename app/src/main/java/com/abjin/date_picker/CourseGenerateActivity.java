@@ -40,9 +40,10 @@ public class CourseGenerateActivity extends AppCompatActivity {
         Set<String> interestsSet = prefManager.getInterests();
         List<String> interests = new ArrayList<>(interestsSet);
         String additional = prefManager.getAdditionalRequest();
+        String weather = prefManager.getWeather();
         double budget = prefManager.getBudget();
 
-        DateCourseRequest request = new DateCourseRequest(region, interests, budget, additional);
+        DateCourseRequest request = new DateCourseRequest(region, interests, budget, additional, weather);
 
         DateCourseApiService apiService = ApiClient.getClient(this).create(DateCourseApiService.class);
         apiService.generateDateCourse(request).enqueue(new Callback<DateCourseResponse>() {
