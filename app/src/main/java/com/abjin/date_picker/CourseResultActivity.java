@@ -71,7 +71,25 @@ public class CourseResultActivity extends AppCompatActivity {
         });
 
         btnShare.setOnClickListener(v -> {
-            Toast.makeText(this, "공유 기능 준비중입니다", Toast.LENGTH_SHORT).show();
+            if (courseData == null) {
+                Toast.makeText(this, "공유할 코스가 없습니다", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String shareUrl = "https://date-picker-share-web.vercel.app/?id=" + courseData.getId();
+            String shareText = courseData.getTitle() + "\n" + shareUrl;
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "데이트 코스 공유");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+            try {
+                startActivity(Intent.createChooser(shareIntent, "코스 공유하기"));
+            } catch (Exception e) {
+                Log.e(TAG, "No activity found to handle share", e);
+                Toast.makeText(this, "공유할 앱이 없습니다", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
