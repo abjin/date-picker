@@ -29,25 +29,7 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
-            app:startIconDrawable="@android:drawable/ic_menu_search"
-            app:startIconTint="@color/text_secondary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSearchLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="지역 검색 (예: 홍대, 강남)"
-                android:maxLines="1" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -91,6 +73,28 @@
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCustomLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCustomLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="직접 입력하기 (예: 합정, 서촌)"
+                android:imeOptions="actionDone"
+                android:inputType="textCapWords" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        
 
     </LinearLayout>
 

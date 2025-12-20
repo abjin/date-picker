@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.abjin.date_picker.api.models.UserPreferenceResponse;
 import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import android.util.Log;
 
@@ -28,6 +31,7 @@ public class LocationSelectActivity extends AppCompatActivity {
         tvSelectedLocation = findViewById(R.id.tvSelectedLocation);
         gridLocations = findViewById(R.id.gridLocations);
         MaterialButton btnComplete = findViewById(R.id.btnComplete);
+        TextInputEditText etCustomLocation = findViewById(R.id.etCustomLocation);
 
         // 기존 region 로드
         UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(this);
@@ -42,6 +46,27 @@ public class LocationSelectActivity extends AppCompatActivity {
 
         for (String location : locations) {
             addLocationButton(location);
+        }
+
+        // 직접 입력: 입력할 때 자동 선택
+        if (etCustomLocation != null) {
+            etCustomLocation.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String input = s != null ? s.toString().trim() : "";
+                    if (!input.isEmpty()) {
+                        selectedLocation = input;
+                        tvSelectedLocation.setText(input);
+                        updateAllButtonStyles();
+                    }
+                }
+            });
         }
 
         btnComplete.setOnClickListener(v -> {
