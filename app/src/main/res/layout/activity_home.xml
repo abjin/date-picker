@@ -55,8 +55,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/bg_recommended_course_gradient">
+                    android:background="@drawable/bg_recommended_course_gradient"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -67,17 +67,17 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp"
                             android:gravity="center_vertical"
-                            android:layout_marginBottom="16dp">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="🔥 인기"
                                 android:background="@drawable/bg_badge_primary"
                                 android:paddingHorizontal="14dp"
                                 android:paddingVertical="8dp"
+                                android:text="🔥 인기"
                                 android:textColor="@color/primary"
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
@@ -103,46 +103,46 @@
                             android:id="@+id/tvRecommendedTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lineSpacingExtra="4dp"
+                            android:maxLines="2"
                             android:text="강남 가성비 데이트 코스"
                             android:textColor="@color/text_primary"
                             android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:lineSpacingExtra="4dp"
-                            android:maxLines="2"
-                            android:ellipsize="end" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvRecommendedDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="맛집 + 카페 + 전시"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="14sp"
+                            android:ellipsize="end"
                             android:lineSpacingExtra="4dp"
                             android:maxLines="2"
-                            android:ellipsize="end" />
+                            android:text="맛집 + 카페 + 전시"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
+                                android:layout_marginEnd="20dp"
                                 android:gravity="center_vertical"
-                                android:layout_marginEnd="20dp">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="4dp"
                                     android:text="📍"
-                                    android:textSize="14sp"
-                                    android:layout_marginEnd="4dp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/tvRecommendedRegion"
@@ -158,15 +158,15 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginEnd="4dp"
                                     android:text="💰"
-                                    android:textSize="14sp"
-                                    android:layout_marginEnd="4dp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/tvRecommendedBudget"
@@ -187,31 +187,32 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGenerateCourse"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_button_gradient"
+                android:elevation="4dp"
+                android:text="✨ 나만의 데이트 코스 만들기"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="14dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGenerateCourse"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginEnd="6dp"
-                    android:layout_weight="1"
-                    android:text="코스 생성하기"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/primary"
-                    app:cornerRadius="12dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEditConditions"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_height="52dp"
+                    android:layout_marginEnd="6dp"
                     android:layout_weight="1"
                     android:text="조건 수정"
                     android:textColor="@color/text_secondary"
@@ -220,20 +221,21 @@
                     app:icon="@android:drawable/ic_menu_edit"
                     app:iconTint="@color/text_secondary" />
 
-            </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSavedCourses"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:text="저장한 코스"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    app:cornerRadius="12dp"
+                    app:icon="@android:drawable/ic_menu_save"
+                    app:iconTint="@color/text_secondary" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSavedCourses"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="12dp"
-                android:text="저장한 코스"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp"
-                app:cornerRadius="12dp"
-                app:icon="@android:drawable/ic_menu_save"
-                app:iconTint="@color/text_secondary" />
+            </LinearLayout>
 
         </LinearLayout>
 
