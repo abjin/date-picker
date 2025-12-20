@@ -20,6 +20,7 @@ import com.abjin.date_picker.api.ApiClient;
 import com.abjin.date_picker.api.DateCourseApiService;
 import com.abjin.date_picker.api.models.BookmarkResponse;
 import com.abjin.date_picker.api.models.DateCourseResponse;
+import com.abjin.date_picker.api.models.ViewCountResponse;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -59,6 +60,8 @@ public class CourseResultActivity extends AppCompatActivity {
             CourseSpotAdapter adapter = new CourseSpotAdapter(courseData.getPlaces());
             rvCourseSpots.setLayoutManager(new LinearLayoutManager(this));
             rvCourseSpots.setAdapter(adapter);
+
+            incrementViewCount(courseData.getId());
         }
 
         btnSave.setOnClickListener(v -> {
@@ -69,6 +72,25 @@ public class CourseResultActivity extends AppCompatActivity {
 
         btnShare.setOnClickListener(v -> {
             Toast.makeText(this, "공유 기능 준비중입니다", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void incrementViewCount(int courseId) {
+        DateCourseApiService apiService = ApiClient.getClient(this).create(DateCourseApiService.class);
+        apiService.incrementViewCount(courseId).enqueue(new Callback<ViewCountResponse>() {
+            @Override
+            public void onResponse(Call<ViewCountResponse> call, Response<ViewCountResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "View count incremented: " + response.body().getViewCount());
+                } else {
+                    Log.e(TAG, "Failed to increment view count: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ViewCountResponse> call, Throwable t) {
+                Log.e(TAG, "Network error while incrementing view count: " + t.getMessage());
+            }
         });
     }
 

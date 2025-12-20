@@ -3,6 +3,7 @@ package com.abjin.date_picker.api;
 import com.abjin.date_picker.api.models.BookmarkResponse;
 import com.abjin.date_picker.api.models.DateCourseRequest;
 import com.abjin.date_picker.api.models.DateCourseResponse;
+import com.abjin.date_picker.api.models.ViewCountResponse;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface DateCourseApiService {
 
     @GET("/date-courses/bookmarks")
     Call<List<DateCourseResponse>> getBookmarkedCourses();
+
+    @POST("/date-courses/{id}/views")
+    Call<ViewCountResponse> incrementViewCount(@Path("id") int courseId);
 }
