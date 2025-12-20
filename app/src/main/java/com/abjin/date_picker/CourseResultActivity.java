@@ -3,6 +3,7 @@ package com.abjin.date_picker;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.abjin.date_picker.api.ApiClient;
+import com.abjin.date_picker.api.DateCourseApiService;
+import com.abjin.date_picker.api.models.BookmarkResponse;
 import com.abjin.date_picker.api.models.DateCourseResponse;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CourseResultActivity extends AppCompatActivity {
+
+    private static final String TAG = "CourseResultActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +62,38 @@ public class CourseResultActivity extends AppCompatActivity {
         }
 
         btnSave.setOnClickListener(v -> {
-            Toast.makeText(this, "코스가 저장되었습니다", Toast.LENGTH_SHORT).show();
+            if (courseData != null) {
+                bookmarkCourse(courseData.getId());
+            }
         });
 
         btnShare.setOnClickListener(v -> {
             Toast.makeText(this, "공유 기능 준비중입니다", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void bookmarkCourse(int courseId) {
+        DateCourseApiService apiService = ApiClient.getClient(this).create(DateCourseApiService.class);
+        apiService.bookmarkCourse(courseId).enqueue(new Callback<BookmarkResponse>() {
+            @Override
+            public void onResponse(Call<BookmarkResponse> call, Response<BookmarkResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(CourseResultActivity.this, "코스가 저장되었습니다", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Bookmark success: " + response.body().getId());
+                } else if (response.code() == 409) {
+                    Log.w(TAG, "Already bookmarked: " + response.code());
+                    Toast.makeText(CourseResultActivity.this, "이미 북마크한 데이트 코스입니다", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(TAG, "Bookmark failed: " + response.code());
+                    Toast.makeText(CourseResultActivity.this, "저장에 실패했습니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookmarkResponse> call, Throwable t) {
+                Log.e(TAG, "Network error: " + t.getMessage());
+                Toast.makeText(CourseResultActivity.this, "네트워크 오류가 발생했습니다", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
