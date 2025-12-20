@@ -78,6 +78,23 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/tvPlaceCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="3곳"
+                android:textColor="@color/text_tertiary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="·"
+                android:textColor="@color/text_tertiary"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/tvViewCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

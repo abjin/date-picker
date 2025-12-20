@@ -222,7 +222,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvCourseTitle, tvCourseDescription, tvCourseRegion, tvCourseBudget, tvViewCount;
+            TextView tvCourseTitle, tvCourseDescription, tvCourseRegion, tvCourseBudget, tvPlaceCount, tvViewCount;
 
             ViewHolder(View itemView) {
                 super(itemView);
@@ -230,6 +230,7 @@ public class HomeActivity extends AppCompatActivity {
                 tvCourseDescription = itemView.findViewById(R.id.tvCourseDescription);
                 tvCourseRegion = itemView.findViewById(R.id.tvCourseRegion);
                 tvCourseBudget = itemView.findViewById(R.id.tvCourseBudget);
+                tvPlaceCount = itemView.findViewById(R.id.tvPlaceCount);
                 tvViewCount = itemView.findViewById(R.id.tvViewCount);
             }
 
@@ -238,6 +239,7 @@ public class HomeActivity extends AppCompatActivity {
                 tvCourseDescription.setText(course.getCourseDescription());
                 tvCourseRegion.setText(course.getRegion());
                 tvCourseBudget.setText(course.getBudget() + "만원");
+                tvPlaceCount.setText(course.getPlaces().size() + "곳");
                 tvViewCount.setText("조회 " + course.getViewCount() + "회");
 
                 itemView.setOnClickListener(v -> {
