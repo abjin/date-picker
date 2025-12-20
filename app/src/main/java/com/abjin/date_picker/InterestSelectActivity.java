@@ -3,6 +3,7 @@ package com.abjin.date_picker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.WindowManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class InterestSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interest_select);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         RecyclerView rvInterests = findViewById(R.id.rvInterests);
         btnNext = findViewById(R.id.btnNext);
@@ -65,11 +67,11 @@ public class InterestSelectActivity extends AppCompatActivity {
         adapter = new InterestAdapter(interests, this::onInterestToggled);
         adapter.selectedItems.addAll(selectedInterests);
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
+        rvInterests.setNestedScrollingEnabled(false);
         rvInterests.setAdapter(adapter);
 
         btnNext.setEnabled(!selectedInterests.isEmpty());
         btnNext.setOnClickListener(v -> {
-            // 선택한 interests 및 추가 요청 저장
             userPrefManager.setInterests(selectedInterests);
             if (etAdditionalRequest != null) {
                 String extra = etAdditionalRequest.getText() != null ? etAdditionalRequest.getText().toString().trim() : "";

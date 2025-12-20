@@ -34,7 +34,8 @@
             android:exported="false" />
         <activity
             android:name=".InterestSelectActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".BudgetSelectActivity"
             android:exported="false" />
