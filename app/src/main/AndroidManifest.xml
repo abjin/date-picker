@@ -54,6 +54,12 @@
         <activity
             android:name=".BookmarkedCoursesActivity"
             android:exported="false" />
+        <activity
+            android:name=".PopularCoursesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecentCoursesActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
