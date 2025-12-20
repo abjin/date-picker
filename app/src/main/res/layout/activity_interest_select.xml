@@ -87,8 +87,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="추가 요청 (선택)"
-                        android:minLines="2"
-                        android:maxLines="3"
+                        android:minLines="1"
+                        android:maxLines="2"
                         android:gravity="top|start"
                         android:imeOptions="actionDone"
                         android:inputType="textCapSentences|textMultiLine" />
