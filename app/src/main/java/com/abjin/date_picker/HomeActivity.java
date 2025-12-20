@@ -47,7 +47,8 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         btnSavedCourses.setOnClickListener(v -> {
-            // TODO: Implement saved courses
+            Intent intent = new Intent(HomeActivity.this, BookmarkedCoursesActivity.class);
+            startActivity(intent);
         });
     }
 
