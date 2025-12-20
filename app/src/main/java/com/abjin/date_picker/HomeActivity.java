@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.abjin.date_picker.api.ApiClient;
 import com.abjin.date_picker.api.DateCourseApiService;
 import com.abjin.date_picker.api.models.DateCourseResponse;
+import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -34,14 +35,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
     private DateCourseResponse recommendedCourse;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        updateToolbarTitle();
 
         MaterialCardView cvRecommendedCourse = findViewById(R.id.cvRecommendedCourse);
         TextView tvRecommendedTitle = findViewById(R.id.tvRecommendedTitle);
@@ -172,6 +176,21 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e(TAG, "Network error loading recent courses: " + t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateToolbarTitle();
+    }
+
+    private void updateToolbarTitle() {
+        String region = UserPreferenceManager.getInstance(this).getRegion();
+        if (region != null && !region.isEmpty()) {
+            toolbar.setTitle(region);
+        } else {
+            toolbar.setTitle("지역을 선택해주세요");
+        }
     }
 
     @Override
