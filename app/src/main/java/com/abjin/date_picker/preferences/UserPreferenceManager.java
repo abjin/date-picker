@@ -22,6 +22,7 @@ public class UserPreferenceManager {
     private static final String KEY_REGION = "region";
     private static final String KEY_INTERESTS = "interests";
     private static final String KEY_BUDGET = "budget";
+    private static final String KEY_ADDITIONAL_REQUEST = "additional_request";
 
     private static UserPreferenceManager instance;
     private SharedPreferences sharedPreferences;
@@ -51,6 +52,10 @@ public class UserPreferenceManager {
         sharedPreferences.edit().putFloat(KEY_BUDGET, budget).apply();
     }
 
+    public void setAdditionalRequest(String text) {
+        sharedPreferences.edit().putString(KEY_ADDITIONAL_REQUEST, text).apply();
+    }
+
     public String getRegion() {
         return sharedPreferences.getString(KEY_REGION, null);
     }
@@ -63,6 +68,10 @@ public class UserPreferenceManager {
         return sharedPreferences.getFloat(KEY_BUDGET, 0f);
     }
 
+    public String getAdditionalRequest() {
+        return sharedPreferences.getString(KEY_ADDITIONAL_REQUEST, "");
+    }
+
     public interface OnUpdateListener {
         void onSuccess(UserPreferenceResponse response);
         void onError(String errorMessage);
@@ -73,8 +82,9 @@ public class UserPreferenceManager {
         Set<String> interestsSet = getInterests();
         List<String> interests = new ArrayList<>(interestsSet);
         double budget = getBudget();
+        String additional = getAdditionalRequest();
 
-        UserPreferenceRequest request = new UserPreferenceRequest(region, interests, budget);
+        UserPreferenceRequest request = new UserPreferenceRequest(region, interests, budget, additional);
 
         UserApiService apiService = ApiClient.getClient(context).create(UserApiService.class);
         apiService.updateUserPreference(request).enqueue(new Callback<UserPreferenceResponse>() {

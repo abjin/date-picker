@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.abjin.date_picker.preferences.UserPreferenceManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ public class InterestSelectActivity extends AppCompatActivity {
     private InterestAdapter adapter;
     private MaterialButton btnNext;
     private Set<String> selectedInterests = new HashSet<>();
+    private TextInputEditText etAdditionalRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,21 @@ public class InterestSelectActivity extends AppCompatActivity {
 
         RecyclerView rvInterests = findViewById(R.id.rvInterests);
         btnNext = findViewById(R.id.btnNext);
+        etAdditionalRequest = findViewById(R.id.etAdditionalRequest);
 
         // 기존 interests 로드
         UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(this);
         Set<String> existingInterests = userPrefManager.getInterests();
         if (!existingInterests.isEmpty()) {
             selectedInterests = new HashSet<>(existingInterests);
+        }
+        // 기존 추가 요청 프리필
+        if (etAdditionalRequest != null) {
+            String saved = userPrefManager.getAdditionalRequest();
+            if (saved != null && !saved.isEmpty()) {
+                etAdditionalRequest.setText(saved);
+                etAdditionalRequest.setSelection(saved.length());
+            }
         }
 
         List<Interest> interests = new ArrayList<>();
@@ -58,8 +69,12 @@ public class InterestSelectActivity extends AppCompatActivity {
 
         btnNext.setEnabled(!selectedInterests.isEmpty());
         btnNext.setOnClickListener(v -> {
-            // 선택한 interests 저장
+            // 선택한 interests 및 추가 요청 저장
             userPrefManager.setInterests(selectedInterests);
+            if (etAdditionalRequest != null) {
+                String extra = etAdditionalRequest.getText() != null ? etAdditionalRequest.getText().toString().trim() : "";
+                userPrefManager.setAdditionalRequest(extra);
+            }
 
             Intent intent = new Intent(InterestSelectActivity.this, BudgetSelectActivity.class);
             startActivity(intent);

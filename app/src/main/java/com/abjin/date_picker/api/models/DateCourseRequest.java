@@ -1,5 +1,6 @@
 package com.abjin.date_picker.api.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DateCourseRequest {
@@ -8,9 +9,20 @@ public class DateCourseRequest {
     private double budget;
 
     public DateCourseRequest(String region, List<String> interests, double budget) {
+        this(region, interests, budget, null);
+    }
+
+    public DateCourseRequest(String region, List<String> interests, double budget, String additional) {
         this.region = region;
-        this.interests = interests;
         this.budget = budget;
+        // copy to avoid mutating caller's list
+        this.interests = interests != null ? new ArrayList<>(interests) : new ArrayList<>();
+        if (additional != null) {
+            String extra = additional.trim();
+            if (!extra.isEmpty()) {
+                this.interests.add(extra);
+            }
+        }
     }
 
     public String getRegion() {
