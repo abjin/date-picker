@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface DateCourseApiService {
     @POST("/date-courses")
@@ -25,4 +26,7 @@ public interface DateCourseApiService {
 
     @POST("/date-courses/{id}/views")
     Call<ViewCountResponse> incrementViewCount(@Path("id") int courseId);
+
+    @GET("/date-courses")
+    Call<List<DateCourseResponse>> getDateCourses(@Query("sortBy") String sortBy, @Query("limit") int limit);
 }
