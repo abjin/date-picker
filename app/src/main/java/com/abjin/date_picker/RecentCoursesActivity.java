@@ -57,7 +57,7 @@ public class RecentCoursesActivity extends AppCompatActivity {
 
     private void loadRecentCourses() {
         DateCourseApiService apiService = ApiClient.getClient(this).create(DateCourseApiService.class);
-        apiService.getDateCourses("createdAt", 50).enqueue(new Callback<List<DateCourseResponse>>() {
+        apiService.getDateCourses("latest", 50).enqueue(new Callback<List<DateCourseResponse>>() {
             @Override
             public void onResponse(Call<List<DateCourseResponse>> call, Response<List<DateCourseResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
