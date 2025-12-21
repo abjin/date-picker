@@ -2,6 +2,7 @@ package com.abjin.date_picker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,8 +27,21 @@ public class MyPageActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        TextView tvUserEmail = findViewById(R.id.tvUserEmail);
         MaterialButton btnEditInterests = findViewById(R.id.btnEditInterests);
         MaterialButton btnLogout = findViewById(R.id.btnLogout);
+
+        // TokenManager를 통해 계정 정보 가져오기
+        TokenManager tokenManager = TokenManager.getInstance(this);
+        String userEmail = tokenManager.getUserEmail();
+        String userName = tokenManager.getUserName();
+
+        // 계정 정보 표시
+        if (userName != null && !userName.isEmpty()) {
+            tvUserEmail.setText(userName + " (" + (userEmail != null ? userEmail : "") + ")");
+        } else if (userEmail != null) {
+            tvUserEmail.setText(userEmail);
+        }
 
         btnEditInterests.setOnClickListener(v -> {
             Intent intent = new Intent(MyPageActivity.this, InterestSelectActivity.class);
@@ -37,7 +51,6 @@ public class MyPageActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(v -> {
             String webClientId = getString(R.string.google_web_client_id);
             GoogleAuthManager googleAuthManager = new GoogleAuthManager(this, webClientId);
-            TokenManager tokenManager = TokenManager.getInstance(this);
             UserPreferenceManager userPrefManager = UserPreferenceManager.getInstance(this);
 
             // Google 로그아웃
